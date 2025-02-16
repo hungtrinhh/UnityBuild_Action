@@ -1,15 +1,29 @@
-name: "My Docker Action"
-description: "A simple GitHub Action using Docker"
+name: "Unity Build Action"
+description: "Build Unity project using Docker"
 author: "Hùng Trịnh vui vẻ"
 
 inputs:
-  name:
-    description: "Tên người dùng"
-    required: false
-    default: "World"
+  unity_version:
+    description: "Unity version to use"
+    required: true
+  project_path:
+    description: "Path to the Unity project"
+    required: true
+    default: "./"
+  build_target:
+    description: "Build target (StandaloneWindows64, Android, WebGL, etc.)"
+    required: true
+    default: "StandaloneWindows64"
+  output_path:
+    description: "Path to output build files"
+    required: true
+    default: "Build/"
 
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.name }}
+    - ${{ inputs.unity_version }}
+    - ${{ inputs.project_path }}
+    - ${{ inputs.build_target }}
+    - ${{ inputs.output_path }}

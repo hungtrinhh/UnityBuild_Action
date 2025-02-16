@@ -1,10 +1,30 @@
 #!/bin/sh -l
 
-NAME=$1
-GREETING="Hello, $NAME! Welcome to my custom GitHub Action!"
+UNITY_VERSION=$1
+PROJECT_PATH=$2
+BUILD_TARGET=$3
+OUTPUT_PATH=$4
 
-# In ra màn hình
-echo "$GREETING"
+echo "Building Unity project..."
+echo "Unity Version: $UNITY_VERSION"
+echo "Project Path: $PROJECT_PATH"
+echo "Build Target: $BUILD_TARGET"
+echo "Output Path: $OUTPUT_PATH"
 
-# Xuất output để GitHub Actions có thể sử dụng
-echo "greeting=$GREETING" >> "$GITHUB_ENV"
+# Chạy Unity build
+/opt/unity/Editor/Unity \
+  -batchmode \
+  -nographics \
+  -quit \
+  -projectPath "$PROJECT_PATH" \
+  -buildTarget "$BUILD_TARGET" \
+  -executeMethod BuildScript.PerformBuild \
+  -logFile /dev/stdout
+
+# Kiểm tra lỗi
+if [ $? -eq 0 ]; then
+  echo "Unity Build Completed Successfully!"
+else
+  echo "Unity Build Failed!" >&2
+  exit 1
+fi
