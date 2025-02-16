@@ -1,0 +1,15 @@
+name: "My Docker Action"
+description: "A simple GitHub Action using Docker"
+author: "Hùng Trịnh vui vẻ"
+
+inputs:
+  name:
+    description: "Tên người dùng"
+    required: false
+    default: "World"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.name }}
