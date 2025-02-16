@@ -1,4 +1,10 @@
+#!/bin/sh -l
 
-#!/bin/sh
+NAME=$1
+GREETING="Hello, $NAME! Welcome to my custom GitHub Action!"
 
-echo "Hello, $1! Welcome to my custom GitHub Action!"
+# In ra màn hình
+echo "$GREETING"
+
+# Xuất output để GitHub Actions có thể sử dụng
+echo "greeting=$GREETING" >> "$GITHUB_ENV"
