@@ -18,7 +18,7 @@ echo "Output Path: $OUTPUT_PATH"
   -quit \
   -projectPath "$PROJECT_PATH" \
   -buildTarget "$BUILD_TARGET" \
-  -executeMethod BuildScript.PerformBuild \
+  -executeMethod BuildScript.BuildCLI \
   -logFile /dev/stdout
 
 # Kiểm tra lỗi
