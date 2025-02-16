@@ -1,4 +1,4 @@
-FROM unityci/editor:2021.3.18f1-linux-il2cpp
+FROM unityci/editor:2020.1.14f1-base-0
 
 # Cài đặt dependencies nếu cần
 RUN apt-get update && apt-get install -y curl xvfb
