@@ -1,30 +1,23 @@
-#!/bin/sh -l
+#!/bin/sh
 
-UNITY_VERSION=$1
-PROJECT_PATH=$2
-BUILD_TARGET=$3
-OUTPUT_PATH=$4
+# Kiểm tra xem biến môi trường có được thiết lập không
+if [ -z "$UNITY_LICENSE" ]; then
+  echo "❌ ERROR: UNITY_LICENSE không được thiết lập!"
+  exit 1
+fi
 
-echo "Building Unity project..."
-echo "Unity Version: $UNITY_VERSION"
-echo "Project Path: $PROJECT_PATH"
-echo "Build Target: $BUILD_TARGET"
-echo "Output Path: $OUTPUT_PATH"
+echo "🚀 Kích hoạt Unity License..."
+echo "$UNITY_LICENSE" > /root/.local/share/unity3d/Unity/Unity_lic.ulf
 
-# Chạy Unity build
+# Chạy Unity để build project
+echo "🏗 Bắt đầu build Unity..."
 /opt/unity/Editor/Unity \
   -batchmode \
   -nographics \
-  -quit \
-  -projectPath "$PROJECT_PATH" \
-  -buildTarget "$BUILD_TARGET" \
-  -executeMethod BuildScript.BuildCLI \
-  -logFile /dev/stdout
+  -logFile /dev/stdout \
+  -projectPath "$INPUT_PROJECT_PATH" \
+  -buildTarget "$INPUT_BUILD_TARGET" \
+  -outputPath "$INPUT_OUTPUT_PATH" \
+  -quit
 
-# Kiểm tra lỗi
-if [ $? -eq 0 ]; then
-  echo "Unity Build Completed Successfully!"
-else
-  echo "Unity Build Failed!" >&2
-  exit 1
-fi
+echo "✅ Build hoàn tất!"
